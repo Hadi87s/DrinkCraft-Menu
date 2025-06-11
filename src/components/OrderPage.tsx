@@ -1,12 +1,12 @@
-import { motion } from 'framer-motion';
-import JuiceCard from './JuiceCard';
-import { useToast } from '@/hooks/use-toast';
-import { GlassWater, Droplets } from 'lucide-react';
+import { motion } from "framer-motion";
+import JuiceCard from "./JuiceCard";
+import { GlassWater, Droplets } from "lucide-react";
+import { toast } from "sonner";
 
 const juices = [
-  { name: 'Pineapple Juice', id: 1 },
-  { name: 'Blueberry Juice', id: 2 },
-  { name: 'Watermelon Juice', id: 3 }
+  { name: "Pineapple Juice", id: 1 },
+  { name: "Blueberry Juice", id: 2 },
+  { name: "Watermelon Juice", id: 3 }
 ];
 
 const containerVariants = {
@@ -43,27 +43,25 @@ const gridVariants = {
 };
 
 export default function OrderPage() {
-  const { toast } = useToast();
-
   const handleOrder = async (orderId: number) => {
     try {
       // Show loading toast
-      toast({
-        title: "Processing Order...",
-        description: "Your delicious juice is being prepared!",
-      });
+      toast("Your delicious juice is being prepared!");
 
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       // For demo purposes, we'll just show success without actual API call
       const isTopping = orderId > 3;
-      const juiceName = juices.find(j => j.id === (isTopping ? orderId - 3 : orderId))?.name || 'Juice';
-      
-      toast({
-        title: "Order Confirmed! 🎉",
-        description: `Your ${juiceName}${isTopping ? ' with Chocolate Chips' : ''} will be ready soon!`,
-      });
+      const juiceName =
+        juices.find((j) => j.id === (isTopping ? orderId - 3 : orderId))
+          ?.name || "Juice";
+
+      toast(
+        `Your ${juiceName}${
+          isTopping ? " with Chocolate Chips" : ""
+        } will be ready soon!`
+      );
 
       // Uncomment this for actual ESP32 communication:
       // await fetch('http://<ESP32_IP>/order', {
@@ -71,12 +69,8 @@ export default function OrderPage() {
       //   headers: { 'Content-Type': 'application/json' },
       //   body: JSON.stringify({ order: orderId })
       // });
-    } catch (error) {
-      toast({
-        title: "Order Failed",
-        description: "Something went wrong. Please try again.",
-        variant: "destructive"
-      });
+    } catch {
+      toast("Something went wrong. Please try again.");
     }
   };
 
@@ -88,10 +82,7 @@ export default function OrderPage() {
       className="min-h-screen bg-gradient-to-br from-background via-accent/10 to-secondary/20 py-12 px-4"
     >
       <div className="max-w-6xl mx-auto">
-        <motion.div
-          variants={headerVariants}
-          className="text-center mb-12"
-        >
+        <motion.div variants={headerVariants} className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
             <motion.div
               animate={{ rotate: 360 }}
@@ -115,8 +106,9 @@ export default function OrderPage() {
             transition={{ delay: 0.5 }}
             className="text-lg text-muted-foreground max-w-2xl mx-auto"
           >
-            Experience the perfect blend of fresh fruits and premium ingredients. 
-            Choose your favorite juice and make it extraordinary with our special toppings!
+            Experience the perfect blend of fresh fruits and premium
+            ingredients. Choose your favorite juice and make it extraordinary
+            with our special toppings!
           </motion.p>
         </motion.div>
 
@@ -141,7 +133,8 @@ export default function OrderPage() {
           className="text-center mt-16"
         >
           <p className="text-sm text-muted-foreground">
-            Made with love using the freshest ingredients • Delivered directly to your cup
+            Made with love using the freshest ingredients • Delivered directly
+            to your cup
           </p>
         </motion.div>
       </div>
