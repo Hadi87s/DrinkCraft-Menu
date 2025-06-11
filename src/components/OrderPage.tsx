@@ -62,9 +62,14 @@ export default function OrderPage() {
     try {
       // Show loading toast
       toast("Your delicious juice is being prepared!");
+      console.log(`order id: ${orderId}`);
 
       // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await fetch(`http://${process.env.ESP32_IP!}/order`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ order: orderId })
+      });
 
       // For demo purposes, we'll just show success without actual API call
       const isTopping = orderId > 3;
@@ -77,13 +82,6 @@ export default function OrderPage() {
           isTopping ? " with Chocolate Chips" : ""
         } will be ready soon!`
       );
-
-      // Uncomment this for actual ESP32 communication:
-      // await fetch('http://<ESP32_IP>/order', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ order: orderId })
-      // });
     } catch {
       toast("Something went wrong. Please try again.");
     }
@@ -132,11 +130,7 @@ export default function OrderPage() {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {juices.map((juice) => (
-            <JuiceCard
-              key={juice.id}
-              juice={juice}
-              onOrder={handleOrder}
-            />
+            <JuiceCard key={juice.id} juice={juice} onOrder={handleOrder} />
           ))}
         </motion.div>
 
