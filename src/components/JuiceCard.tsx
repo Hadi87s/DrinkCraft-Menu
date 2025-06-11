@@ -65,9 +65,9 @@ export default function JuiceCard({ juice, onOrder }: JuiceCardProps) {
       whileHover="hover"
       className="group"
     >
-      <Card className="overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-shadow duration-300 bg-gradient-to-b from-background to-accent/20">
+      <Card className="py-0 overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-shadow duration-300 bg-gradient-to-b from-background to-accent/20">
         <CardHeader className="p-0 relative">
-          <div className="relative h-48 overflow-hidden rounded-t-lg">
+          <div className="relative h-64 overflow-hidden rounded-t-lg">
             <motion.img
               src={juice.image}
               alt={juice.name}
