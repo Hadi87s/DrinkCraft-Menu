@@ -1,29 +1,26 @@
-import { motion } from 'framer-motion';
-import { Sparkles, Plus } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Badge } from './ui/badge';
-import { Button } from './ui/button';
+import { motion } from "framer-motion";
+import { Sparkles, Plus } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
 
 interface JuiceCardProps {
-  juiceName: string;
-  orderId: number;
+  juice: {
+    name: string;
+    id: number;
+    image: string;
+  };
   onOrder: (orderId: number) => void;
 }
 
-const juiceImages = {
-  1: 'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=400&h=300&fit=crop&auto=format',
-  2: 'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=400&h=300&fit=crop&auto=format',
-  3: 'https://images.unsplash.com/photo-1563114773-84221bd62daa?w=400&h=300&fit=crop&auto=format'
-};
-
 const cardVariants = {
-  hidden: { 
-    opacity: 0, 
+  hidden: {
+    opacity: 0,
     y: 50,
-    scale: 0.9 
+    scale: 0.9
   },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     scale: 1,
     transition: {
@@ -59,11 +56,7 @@ const imageVariants = {
   }
 };
 
-export default function JuiceCard({
-  juiceName,
-  orderId,
-  onOrder
-}: JuiceCardProps) {
+export default function JuiceCard({ juice, onOrder }: JuiceCardProps) {
   return (
     <motion.div
       variants={cardVariants}
@@ -76,8 +69,8 @@ export default function JuiceCard({
         <CardHeader className="p-0 relative">
           <div className="relative h-48 overflow-hidden rounded-t-lg">
             <motion.img
-              src={juiceImages[orderId as keyof typeof juiceImages] || juiceImages[1]}
-              alt={juiceName}
+              src={juice.image}
+              alt={juice.name}
               className="w-full h-full object-cover"
               variants={imageVariants}
               whileHover="hover"
@@ -89,27 +82,34 @@ export default function JuiceCard({
               transition={{ delay: 0.2 }}
               className="absolute top-3 right-3"
             >
-              <Badge variant="secondary" className="bg-white/90 text-foreground">
+              <Badge
+                variant="secondary"
+                className="bg-white/90 text-foreground"
+              >
                 Fresh
               </Badge>
             </motion.div>
           </div>
         </CardHeader>
-        
+
         <CardContent className="p-6 space-y-4">
           <CardTitle className="text-xl font-bold text-center bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-            {juiceName}
+            {juice.name}
           </CardTitle>
-          
-          <motion.div 
+
+          <motion.div
             className="space-y-3"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
-            <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
+            <motion.div
+              variants={buttonVariants}
+              whileHover="hover"
+              whileTap="tap"
+            >
               <Button
-                onClick={() => onOrder(orderId)}
+                onClick={() => onOrder(juice.id)}
                 className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
                 size="lg"
               >
@@ -124,10 +124,14 @@ export default function JuiceCard({
                 </motion.span>
               </Button>
             </motion.div>
-            
-            <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
+
+            <motion.div
+              variants={buttonVariants}
+              whileHover="hover"
+              whileTap="tap"
+            >
               <Button
-                onClick={() => onOrder(orderId + 3)}
+                onClick={() => onOrder(juice.id + 3)}
                 variant="outline"
                 className="w-full border-2 border-purple-500 text-purple-600 hover:bg-purple-500 hover:text-white font-semibold py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
                 size="lg"

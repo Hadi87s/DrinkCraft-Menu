@@ -4,9 +4,24 @@ import { GlassWater, Droplets } from "lucide-react";
 import { toast } from "sonner";
 
 const juices = [
-  { name: "Pineapple Juice", id: 1 },
-  { name: "Blueberry Juice", id: 2 },
-  { name: "Watermelon Juice", id: 3 }
+  {
+    name: "Pineapple Juice",
+    id: 1,
+    image:
+      "https://images.unsplash.com/photo-1607644536940-6c300b5784c5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    name: "Blueberry Juice",
+    id: 2,
+    image:
+      "https://images.unsplash.com/photo-1662186341099-56d0131327b5?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    name: "Watermelon Juice",
+    id: 3,
+    image:
+      "https://images.unsplash.com/photo-1683531658992-b78c311900a3?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  }
 ];
 
 const containerVariants = {
@@ -116,11 +131,10 @@ export default function OrderPage() {
           variants={gridVariants}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {juices.map(({ name, id }) => (
+          {juices.map((juice) => (
             <JuiceCard
-              key={id}
-              juiceName={name}
-              orderId={id}
+              key={juice.id}
+              juice={juice}
               onOrder={handleOrder}
             />
           ))}
