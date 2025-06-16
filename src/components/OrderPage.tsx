@@ -65,7 +65,7 @@ export default function OrderPage() {
       console.log(`order id: ${orderId}`);
 
       // Simulate API call
-      await fetch(`http://${process.env.ESP32_IP!}/order`, {
+      await fetch(`http://192.168.137.20/order`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ order: orderId })
@@ -82,7 +82,9 @@ export default function OrderPage() {
           isTopping ? " with Chocolate Chips" : ""
         } will be ready soon!`
       );
-    } catch {
+    } catch (e) {
+      console.error(e);
+
       toast("Something went wrong. Please try again.");
     }
   };
