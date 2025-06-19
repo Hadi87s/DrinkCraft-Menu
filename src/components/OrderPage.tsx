@@ -23,11 +23,29 @@ const juices = [
       "https://images.unsplash.com/photo-1683531658992-b78c311900a3?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
   {
-    name: "Mix",
+    name: "Fruit Punch Pineapple Flavor",
     id: 4,
     image:
-      "https://images.unsplash.com/photo-1683531658992-b78c311900a3?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      "https://images.unsplash.com/photo-1665582513044-376da77ebec0?q=80&w=765&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
+  {
+    name: "Fruit Punch Watermelon Flavor",
+    id: 5,
+    image:
+      "https://images.unsplash.com/photo-1652780201271-cbf3f4541c0d?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    name: "Pineapple + Watermelon",
+    id: 6,
+    image:
+      "https://images.unsplash.com/photo-1514994960127-ed3ef9239d11?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    name: "Mix It All",
+    id: 7,
+    image:
+      "https://images.unsplash.com/photo-1583577612013-4fecf7bf8f13?q=80&w=966&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  }
 ];
 
 const containerVariants = {
@@ -68,17 +86,16 @@ export default function OrderPage() {
     try {
       toast("Your delicious juice is being prepared!");
       console.log(`Order ID: ${orderId}, Topping Mode: ${toppingMode}`);
-  
+
       await fetch(`http://192.168.137.189/order`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ order: orderId, toppings: toppingMode })
       });
-  
+
       const isTopping = toppingMode !== 4;
-      const juiceName =
-        juices.find((j) => j.id === orderId)?.name || "Juice";
-  
+      const juiceName = juices.find((j) => j.id === orderId)?.name || "Juice";
+
       toast(
         `Your ${juiceName}${
           isTopping ? " with your chosen toppings" : ""
@@ -89,7 +106,6 @@ export default function OrderPage() {
       toast("Something went wrong. Please try again.");
     }
   };
-  
 
   return (
     <motion.div
