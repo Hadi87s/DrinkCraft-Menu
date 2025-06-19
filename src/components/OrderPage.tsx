@@ -5,23 +5,29 @@ import { toast } from "sonner";
 
 const juices = [
   {
-    name: "Pineapple Juice",
+    name: "Fruit Punch",
     id: 1,
     image:
-      "https://images.unsplash.com/photo-1607644536940-6c300b5784c5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      "https://images.unsplash.com/photo-1615478503562-ec2d8aa0e24e?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
   {
-    name: "Blueberry Juice",
+    name: "Pineapple Juice",
     id: 2,
     image:
-      "https://images.unsplash.com/photo-1662186341099-56d0131327b5?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      "https://images.unsplash.com/photo-1607644536940-6c300b5784c5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
   {
     name: "Watermelon Juice",
     id: 3,
     image:
       "https://images.unsplash.com/photo-1683531658992-b78c311900a3?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  }
+  },
+  {
+    name: "Mix",
+    id: 4,
+    image:
+      "https://images.unsplash.com/photo-1683531658992-b78c311900a3?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
 ];
 
 const containerVariants = {
@@ -58,36 +64,32 @@ const gridVariants = {
 };
 
 export default function OrderPage() {
-  const handleOrder = async (orderId: number) => {
+  const handleOrder = async (orderId: number, toppingMode: number) => {
     try {
-      // Show loading toast
       toast("Your delicious juice is being prepared!");
-      console.log(`order id: ${orderId}`);
-
-      // Simulate API call
-      await fetch(`http://192.168.137.20/order`, {
+      console.log(`Order ID: ${orderId}, Topping Mode: ${toppingMode}`);
+  
+      await fetch(`http://192.168.137.189/order`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ order: orderId })
+        body: JSON.stringify({ order: orderId, toppings: toppingMode })
       });
-
-      // For demo purposes, we'll just show success without actual API call
-      const isTopping = orderId > 3;
+  
+      const isTopping = toppingMode !== 4;
       const juiceName =
-        juices.find((j) => j.id === (isTopping ? orderId - 3 : orderId))
-          ?.name || "Juice";
-
+        juices.find((j) => j.id === orderId)?.name || "Juice";
+  
       toast(
         `Your ${juiceName}${
-          isTopping ? " with Chocolate Chips" : ""
+          isTopping ? " with your chosen toppings" : ""
         } will be ready soon!`
       );
     } catch (e) {
       console.error(e);
-
       toast("Something went wrong. Please try again.");
     }
   };
+  
 
   return (
     <motion.div

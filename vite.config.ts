@@ -8,7 +8,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/order": {
-        target: "http://192.168.137.20",
+        target: "http://192.168.137.189",
         changeOrigin: true
       }
     }
